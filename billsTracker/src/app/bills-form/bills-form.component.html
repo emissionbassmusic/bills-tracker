@@ -1,0 +1,77 @@
+<form class="bills-input-form">
+  <mat-form-field class="input-full-width">
+    <mat-label>Bill Name</mat-label>
+    <input matInput type="text" name="name" [(ngModel)]="billName">
+    <button *ngIf="billName" type="button" matSuffix mat-icon-button aria-label="clear name" (click)="billName=''">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <table class="input-full-width" cellspacing="0"><tr>
+    <td><mat-form-field class="input-full-width">
+      <mat-label>Amount Due</mat-label>
+      <input matInput type="text" name="amount" [(ngModel)]="billAmount">
+      <button *ngIf="billAmount" type="button" matSuffix mat-icon-button aria-label="clear amount" (click)="billAmount=''">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-form-field></td>
+    <td>
+      <mat-form-field appearance="fill" class="input-full-width">
+        <mat-label>Due Date</mat-label>
+        <input matInput name="date" [matDatepicker]="datepicker" [(ngModel)]="billDueDate">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker>
+        </mat-datepicker>
+      </mat-form-field>
+    </td>
+  </tr></table>
+
+  <div class="btn-add">
+    <button mat-fab extended color="primary" (click)="addBillItem()">
+      <mat-icon>add</mat-icon>
+      Add
+    </button>
+  </div>
+</form>
+
+<div *ngIf="billsArrayTable.length > 0" class="bills-table">
+
+  <div class="btn-remove-bill">
+    <button
+        mat-raised-button
+        [disabled]="!billsArrayTable.length"
+        (click)="removeTableItem()"
+        class="demo-button">
+      Remove Bill
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="billsArrayTable" class="mat-elevation-z8 demo-table">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Bill Name</th>
+      <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef>Amount Due</th>
+      <td mat-cell *matCellDef="let element">{{element.amount | currency}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="duedate">
+      <th mat-header-cell *matHeaderCellDef>Due Date</th>
+      <td mat-cell *matCellDef="let element">{{element.duedate}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="paid">
+      <th mat-header-cell *matHeaderCellDef>Paid</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox value="element.paid"></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
