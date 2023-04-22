@@ -6,6 +6,7 @@ export interface BillsTable {
   amount: string;
   dueDate: any;
   paid: boolean;
+  remove: boolean;
 }
 
 @Component({
@@ -24,34 +25,52 @@ export class BillsFormComponent implements OnInit {
   billDueDate: Date | undefined;
 
   billsArrayTable: any = [];
-  displayedColumns: string[] = ['name', 'amount', 'duedate', 'paid'];
+  displayedColumns: string[] = ['name', 'amount', 'duedate', 'paid', 'remove'];
 
   ngOnInit(): void {
     console.log('Loading BillsFormComponent');
   }
 
+  /**
+   * Add bill item to table and clear inputs
+   */
   addBillItem() {
     const item: BillsTable = {
       name: this.billName,
       amount: this.billAmount,
       dueDate: this.billDueDate,
-      paid: false
+      paid: false,
+      remove: false
     };
     this.billsArrayTable.push(item);
-    this.table.renderRows();
-    console.log(this.billDueDate);
+    if (this.billsArrayTable.length > 1) {
+      this.table.renderRows();
+    }
     this.clearForm();
-    console.log('this.billsArrayTable = ', this.billsArrayTable);
   }
 
+  /**
+   * Clear form data
+   */
   clearForm() {
     this.billName = '';
     this.billAmount = '';
     this.billDueDate = undefined;
   }
 
+  /**
+   * Remove item from table array
+   */
   removeTableItem() {
-
+    this.billsArrayTable.forEach((item: any, index: any, object: any[]) => {
+      if (item.remove) {
+        object.splice(index, 1);
+        this.table.renderRows();
+      }
+    });
+    if (this.billsArrayTable.length > 1) {
+      this.table.renderRows();
+    }
   }
 
 }

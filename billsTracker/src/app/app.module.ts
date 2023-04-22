@@ -12,6 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { BillsFormComponent } from './bills-form/bills-form.component';
 
 @NgModule({
@@ -31,7 +32,8 @@ import { BillsFormComponent } from './bills-form/bills-form.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTableModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSidenavModule
   ],
   providers: [MatDatepickerModule, MatNativeDateModule],
   bootstrap: [AppComponent]
